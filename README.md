@@ -9,7 +9,7 @@ from abcattrs import abstractattrs, Abstract
 
 
 @abstractattrs
-class A:
+class A(abc.ABC):
     foo: Abstract[int]
 
 
