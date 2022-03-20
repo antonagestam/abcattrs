@@ -79,13 +79,15 @@ def check_abstract_class_attributes(cls: type) -> None:
 
 def _init_subclass(
     cls: type,
-    existing_init_subclass: Callable[..., None] = lambda *_, **__: None,
+    existing_init_subclass: Callable[..., None] | None = None,
     *args: Any,
     **kwargs: Any,
 ) -> None:
     """
     __init_subclass__ implementation added to classes decorated with @abstractattrs.
     """
-    super(cls).__init_subclass__()  # type: ignore[misc]
+    if existing_init_subclass is None:
+        super(cls).__init_subclass__()  # type: ignore[misc]
+    else:
+        existing_init_subclass(cls, *args, **kwargs)
     check_abstract_class_attributes(cls)
-    existing_init_subclass(cls, *args, **kwargs)
