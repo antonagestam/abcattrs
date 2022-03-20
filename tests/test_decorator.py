@@ -107,14 +107,14 @@ def test_can_decorate_class_with_self_reference() -> None:
     class A(abc.ABC):
         recursive: Abstract["A"]
 
-    # These checks might not add much value, I consider them more like smoke tests ...
-    with pytest.raises(UndefinedAbstractAttribute):
-        type("B", (A,), {})
+
+def test_can_decorate_class_with_forward_reference() -> None:
+    @abstractattrs
+    class A(abc.ABC):
+        forward: Abstract["B"]
+
+    class B:
+        ...
 
     class C(A):
-        @property
-        def recursive(self) -> A:
-            return C()
-
-    c = C()
-    assert isinstance(c.recursive, C)
+        forward = B()
