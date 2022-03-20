@@ -1,5 +1,6 @@
 import abc
-from typing import Annotated, get_type_hints
+from typing import Annotated
+from typing import get_type_hints
 from unittest import mock
 
 import pytest
