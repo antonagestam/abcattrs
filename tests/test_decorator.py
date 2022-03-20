@@ -13,6 +13,7 @@ from abcattrs import check_abstract_class_attributes
 def test_base_class_saves_attributes() -> None:
     @abstractattrs
     class A(abc.ABC):
+        bar: int
         foo: Abstract[int]
 
     assert not {"foo"} ^ A.__abstract_attributes__  # type: ignore[attr-defined]

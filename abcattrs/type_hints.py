@@ -27,7 +27,7 @@ def get_resolvable_type_hints(cls: type) -> dict[str, type]:
         except NameError as exception:
             name = get_name_error_name(exception)
             local_ns[name] = ForwardRef(name)  # type: ignore[assignment]
-    else:
+    else:  # pragma: no cover
         raise MaxIterations(
             f"Exceeded {max_iterations} iterations trying to resolve type hints of "
             f"{cls.__module__}.{cls.__qualname__}."
