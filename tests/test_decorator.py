@@ -13,6 +13,7 @@ from abcattrs import check_abstract_class_attributes
 def test_base_class_saves_attributes() -> None:
     @abstractattrs
     class A(abc.ABC):
+        bar: int
         foo: Abstract[int]
 
     assert not {"foo"} ^ A.__abstract_attributes__  # type: ignore[attr-defined]
@@ -100,3 +101,21 @@ def test_existing_init_subclass_method_is_wrapped() -> None:
         attr = 1
 
     init_subclass.assert_called_once_with(C, class_arg="intact")
+
+
+def test_can_decorate_class_with_self_reference() -> None:
+    @abstractattrs
+    class A(abc.ABC):
+        recursive: Abstract["A"]  # noqa: F821
+
+
+def test_can_decorate_class_with_forward_reference() -> None:
+    @abstractattrs
+    class A(abc.ABC):
+        forward: Abstract["B"]  # noqa: F821
+
+    class B:
+        ...
+
+    class C(A):
+        forward = B()
