@@ -71,7 +71,6 @@ repos:
           - "--parser=markdown"
           - "--print-width=88"
           - "--prose-wrap=always"
-          # - "--write"
 
 exclude: |
   (?x)(
