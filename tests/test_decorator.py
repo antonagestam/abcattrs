@@ -1,6 +1,5 @@
 import abc
 from typing import Annotated
-from typing import get_type_hints
 from unittest import mock
 
 import pytest
@@ -106,13 +105,13 @@ def test_existing_init_subclass_method_is_wrapped() -> None:
 def test_can_decorate_class_with_self_reference() -> None:
     @abstractattrs
     class A(abc.ABC):
-        recursive: Abstract["A"]
+        recursive: Abstract["A"]  # noqa: F821
 
 
 def test_can_decorate_class_with_forward_reference() -> None:
     @abstractattrs
     class A(abc.ABC):
-        forward: Abstract["B"]
+        forward: Abstract["B"]  # noqa: F821
 
     class B:
         ...

@@ -7,7 +7,10 @@ from typing import Callable
 from typing import Final
 from typing import Iterable
 from typing import TypeVar
-from typing import get_type_hints
+from typing import get_args
+from typing import get_origin
+
+from .type_hints import get_resolvable_type_hints
 
 _abstract_marker: Final = object()
 _O = TypeVar("_O")
@@ -15,17 +18,16 @@ Abstract = Annotated[_O, _abstract_marker]
 
 
 def get_abstract_attributes(cls: type) -> Iterable[tuple[str, type]]:
-    hints = get_type_hints(
-        cls,
-        include_extras=True,
-        localns={cls.__name__: cls},
-    )
+    hints = get_resolvable_type_hints(cls)
+
     for var, hint in hints.items():
+        if not get_origin(hint) is Annotated:
+            continue
         # Checking for both the abstract marker and the type alias itself allows both
-        # a concise way using e.g. `var: Abstract[int]` and a way to combine the
-        # qualifier with other annotated types e.g.
+        # a concise way using e.g. `var: Abstract[int]` as well as a verbose way that
+        # allows combining the qualifier with other annotated types and qualifiers, e.g.
         # `var: Annotated[int, Abstract, Other]`.
-        if {_abstract_marker, Abstract} & set(getattr(hint, "__metadata__", ())):
+        if {_abstract_marker, Abstract} & set(get_args(hint)):
             yield var, hint
 
 
@@ -63,9 +65,7 @@ class UndefinedAbstractAttribute(TypeError):
 
 
 def check_abstract_class_attributes(cls: type) -> None:
-    """
-    Check that a class defines its abstract attributes.
-    """
+    """Check that a class defines inherited abstract attributes."""
     if abc.ABC in cls.__bases__:
         return
 
