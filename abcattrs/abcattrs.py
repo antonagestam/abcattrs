@@ -6,7 +6,6 @@ from typing import Any
 from typing import Callable
 from typing import Final
 from typing import Iterable
-from typing import Tuple
 from typing import TypeVar
 from typing import get_type_hints
 
@@ -15,7 +14,7 @@ _O = TypeVar("_O")
 Abstract = Annotated[_O, _abstract_marker]
 
 
-def get_abstract_attributes(cls: type) -> Iterable[Tuple[str, type]]:
+def get_abstract_attributes(cls: type) -> Iterable[tuple[str, type]]:
     hints = get_type_hints(cls, include_extras=True)
     for var, hint in hints.items():
         # Checking for both the abstract marker and the type alias itself allows both
