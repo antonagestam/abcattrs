@@ -2,7 +2,6 @@
 
 Abstract class attributes for ABCs.
 
-
 ```python
 import abc
 from abcattrs import abstractattrs, Abstract
