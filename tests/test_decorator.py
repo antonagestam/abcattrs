@@ -1,5 +1,5 @@
 import abc
-from typing import Annotated
+from typing import Annotated, get_type_hints
 from unittest import mock
 
 import pytest
@@ -100,3 +100,21 @@ def test_existing_init_subclass_method_is_wrapped() -> None:
         attr = 1
 
     init_subclass.assert_called_once_with(C, class_arg="intact")
+
+
+def test_can_decorate_class_with_self_reference() -> None:
+    @abstractattrs
+    class A(abc.ABC):
+        recursive: Abstract["A"]
+
+    # These checks might not add much value, I consider them more like smoke tests ...
+    with pytest.raises(UndefinedAbstractAttribute):
+        type("B", (A,), {})
+
+    class C(A):
+        @property
+        def recursive(self) -> A:
+            return C()
+
+    c = C()
+    assert isinstance(c.recursive, C)

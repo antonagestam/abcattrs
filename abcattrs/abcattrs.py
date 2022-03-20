@@ -16,7 +16,11 @@ Abstract = Annotated[_O, _abstract_marker]
 
 
 def get_abstract_attributes(cls: type) -> Iterable[Tuple[str, type]]:
-    hints = get_type_hints(cls, include_extras=True)
+    hints = get_type_hints(
+        cls,
+        include_extras=True,
+        localns={cls.__name__: cls},
+    )
     for var, hint in hints.items():
         # Checking for both the abstract marker and the type alias itself allows both
         # a concise way using e.g. `var: Abstract[int]` and a way to combine the
