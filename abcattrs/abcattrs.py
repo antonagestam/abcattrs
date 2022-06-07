@@ -8,8 +8,8 @@ from typing import Final
 from typing import Iterable
 from typing import TypeVar
 from typing import get_args
-from typing import get_origin
 
+from .type_hints import extract_annotated
 from .type_hints import get_resolvable_type_hints
 
 _abstract_marker: Final = object()
@@ -18,17 +18,16 @@ Abstract = Annotated[_O, _abstract_marker]
 
 
 def get_abstract_attributes(cls: type) -> Iterable[tuple[str, type]]:
-    hints = get_resolvable_type_hints(cls)
-
-    for var, hint in hints.items():
-        if not get_origin(hint) is Annotated:
+    for var, hint in get_resolvable_type_hints(cls).items():
+        annotated = extract_annotated(hint)
+        if not annotated:
             continue
         # Checking for both the abstract marker and the type alias itself allows both
         # a concise way using e.g. `var: Abstract[int]` as well as a verbose way that
         # allows combining the qualifier with other annotated types and qualifiers, e.g.
         # `var: Annotated[int, Abstract, Other]`.
-        if {_abstract_marker, Abstract} & set(get_args(hint)):
-            yield var, hint
+        if {_abstract_marker, Abstract} & set(get_args(annotated)):
+            yield var, annotated
 
 
 C = TypeVar("C")
