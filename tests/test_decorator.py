@@ -1,5 +1,6 @@
 import abc
 from typing import Annotated
+from typing import ClassVar
 from unittest import mock
 
 import pytest
@@ -43,7 +44,21 @@ def test_subclassing_without_defining_raises() -> None:
         type("B", (A,), {})
 
 
-def test_can_combine_annotations() -> None:
+def test_can_combine_qualifier_with_class_var() -> None:
+    @abstractattrs
+    class A(abc.ABC):
+        foo: ClassVar[Abstract[int]]
+
+    with pytest.raises(
+        UndefinedAbstractAttribute,
+        match=r"^Concrete class 'B' must define abstract class attribute 'foo'\.$",
+    ):
+        type("B", (A,), {})
+
+    assert not {"foo"} ^ A.__abstract_attributes__  # type: ignore[attr-defined]
+
+
+def test_can_combine_qualifier_with_annotated() -> None:
     other_annotation = object()
 
     @abstractattrs
