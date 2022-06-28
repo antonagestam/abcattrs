@@ -9,4 +9,4 @@ __all__ = (
     "abstractattrs",
     "check_abstract_class_attributes",
 )
-__version__ = "0.3.0"
+__version__ = "0.3.1"

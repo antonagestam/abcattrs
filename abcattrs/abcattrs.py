@@ -49,7 +49,12 @@ def abstractattrs(cls: C) -> C:
     cls.__init_subclass__ = (  # type: ignore[assignment]
         classmethod(  # type: ignore[assignment]
             wraps(cls.__init_subclass__)(
-                partial(_init_subclass, existing_init_subclass=cls.__init_subclass__)
+                partial(
+                    _init_subclass,
+                    existing_init_subclass=(
+                        cls.__init_subclass__.__func__  # type: ignore[attr-defined]
+                    ),
+                )
             )
         )
         if "__init_subclass__" in cls.__dict__
