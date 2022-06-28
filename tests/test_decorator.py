@@ -1,5 +1,6 @@
 import abc
 from typing import Annotated
+from typing import Any
 from typing import ClassVar
 from unittest import mock
 
@@ -104,13 +105,15 @@ def test_existing_init_subclass_method_is_wrapped() -> None:
 
     @abstractattrs
     class A(abc.ABC):
-        __init_subclass__ = init_subclass
+        def __init_subclass__(cls, class_arg: str, **kwargs: Any) -> None:
+            init_subclass(cls, class_arg=class_arg, **kwargs)
+
         attr: Abstract[int]
 
     with pytest.raises(UndefinedAbstractAttribute):
         type("B", (A,), {}, class_arg="doot")
 
-    init_subclass.assert_called_once()
+    init_subclass.assert_called_once_with(mock.ANY, class_arg="doot")
     init_subclass.reset_mock()
 
     class C(A, class_arg="intact"):
