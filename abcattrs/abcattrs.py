@@ -90,8 +90,7 @@ def _init_subclass(
     """
     __init_subclass__ implementation added to classes decorated with @abstractattrs.
     """
-    if existing_init_subclass is None:
-        super(cls).__init_subclass__()  # type: ignore[misc]
-    else:
-        existing_init_subclass(cls, *args, **kwargs)
+    super(cls).__init_subclass__()  # type: ignore[misc]
     check_abstract_class_attributes(cls)
+    if existing_init_subclass is not None:
+        existing_init_subclass(cls, *args, **kwargs)
