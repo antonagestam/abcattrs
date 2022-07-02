@@ -113,7 +113,7 @@ def test_existing_init_subclass_method_is_wrapped() -> None:
     with pytest.raises(UndefinedAbstractAttribute):
         type("B", (A,), {}, class_arg="doot")
 
-    init_subclass.assert_called_once_with(mock.ANY, class_arg="doot")
+    init_subclass.assert_not_called()
     init_subclass.reset_mock()
 
     class C(A, class_arg="intact"):
