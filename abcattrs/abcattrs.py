@@ -6,24 +6,28 @@ from typing import Any
 from typing import Callable
 from typing import Final
 from typing import Iterable
-from typing import Tuple
 from typing import TypeVar
-from typing import get_type_hints
+from typing import get_args
+
+from .type_hints import extract_annotated
+from .type_hints import get_resolvable_type_hints
 
 _abstract_marker: Final = object()
 _O = TypeVar("_O")
 Abstract = Annotated[_O, _abstract_marker]
 
 
-def get_abstract_attributes(cls: type) -> Iterable[Tuple[str, type]]:
-    hints = get_type_hints(cls, include_extras=True)
-    for var, hint in hints.items():
+def get_abstract_attributes(cls: type) -> Iterable[tuple[str, type]]:
+    for var, hint in get_resolvable_type_hints(cls).items():
+        annotated = extract_annotated(hint)
+        if not annotated:
+            continue
         # Checking for both the abstract marker and the type alias itself allows both
-        # a concise way using e.g. `var: Abstract[int]` and a way to combine the
-        # qualifier with other annotated types e.g.
+        # a concise way using e.g. `var: Abstract[int]` as well as a verbose way that
+        # allows combining the qualifier with other annotated types and qualifiers, e.g.
         # `var: Annotated[int, Abstract, Other]`.
-        if {_abstract_marker, Abstract} & set(getattr(hint, "__metadata__", ())):
-            yield var, hint
+        if {_abstract_marker, Abstract} & set(get_args(annotated)):
+            yield var, annotated
 
 
 C = TypeVar("C")
@@ -45,7 +49,12 @@ def abstractattrs(cls: C) -> C:
     cls.__init_subclass__ = (  # type: ignore[assignment]
         classmethod(  # type: ignore[assignment]
             wraps(cls.__init_subclass__)(
-                partial(_init_subclass, existing_init_subclass=cls.__init_subclass__)
+                partial(
+                    _init_subclass,
+                    existing_init_subclass=(
+                        cls.__init_subclass__.__func__  # type: ignore[attr-defined]
+                    ),
+                )
             )
         )
         if "__init_subclass__" in cls.__dict__
@@ -60,9 +69,7 @@ class UndefinedAbstractAttribute(TypeError):
 
 
 def check_abstract_class_attributes(cls: type) -> None:
-    """
-    Check that a class defines its abstract attributes.
-    """
+    """Check that a class defines inherited abstract attributes."""
     if abc.ABC in cls.__bases__:
         return
 
@@ -76,7 +83,7 @@ def check_abstract_class_attributes(cls: type) -> None:
 
 def _init_subclass(
     cls: type,
-    existing_init_subclass: Callable[..., None] = lambda *_, **__: None,
+    existing_init_subclass: Callable[..., None] | None = None,
     *args: Any,
     **kwargs: Any,
 ) -> None:
@@ -85,4 +92,5 @@ def _init_subclass(
     """
     super(cls).__init_subclass__()  # type: ignore[misc]
     check_abstract_class_attributes(cls)
-    existing_init_subclass(cls, *args, **kwargs)
+    if existing_init_subclass is not None:
+        existing_init_subclass(cls, *args, **kwargs)
