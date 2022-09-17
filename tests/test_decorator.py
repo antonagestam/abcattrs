@@ -138,3 +138,16 @@ def test_can_decorate_class_with_forward_reference() -> None:
 
     class C(A):
         forward = B()
+
+
+def test_does_not_interpret_abstract_subclass_as_concrete() -> None:
+    @abstractattrs
+    class A(abc.ABC):
+        attr: Abstract[int]
+
+        @abc.abstractmethod
+        def foo(self) -> None:
+            ...
+
+    class B(A):
+        ...
