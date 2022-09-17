@@ -1,11 +1,11 @@
 import abc
+from collections.abc import Callable
+from collections.abc import Iterable
 from functools import partial
 from functools import wraps
 from typing import Annotated
 from typing import Any
-from typing import Callable
 from typing import Final
-from typing import Iterable
 from typing import TypeVar
 from typing import get_args
 
