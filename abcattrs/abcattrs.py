@@ -1,4 +1,5 @@
 import abc
+import inspect
 from collections.abc import Callable
 from collections.abc import Iterable
 from functools import partial
@@ -70,7 +71,7 @@ class UndefinedAbstractAttribute(TypeError):
 
 def check_abstract_class_attributes(cls: type) -> None:
     """Check that a class defines inherited abstract attributes."""
-    if abc.ABC in cls.__bases__:
+    if inspect.isabstract(cls) or abc.ABC in cls.__bases__:
         return
 
     for attr in getattr(cls, "__abstract_attributes__", ()):
