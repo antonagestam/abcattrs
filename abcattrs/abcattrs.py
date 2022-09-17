@@ -30,11 +30,11 @@ def get_abstract_attributes(cls: type) -> Iterable[tuple[str, type]]:
             yield var, annotated
 
 
-C = TypeVar("C")
+C = TypeVar("C", bound=type[abc.ABC])
 
 
 def abstractattrs(cls: C) -> C:
-    attributes = get_abstract_attributes(cls)  # type: ignore[arg-type]
+    attributes = get_abstract_attributes(cls)
 
     # Save metadata about the abstract attributes on the decorated class. By merging
     # with any already defined attributes we support multiple decorations and
