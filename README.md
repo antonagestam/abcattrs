@@ -10,6 +10,8 @@
 
 Abstract class attributes for ABCs.
 
+### Examples
+
 ```python
 import abc
 from abcattrs import abstractattrs, Abstract
@@ -20,15 +22,24 @@ class A(abc.ABC):
     foo: Abstract[int]
 
 
-# Abstract subclasses can add more required attributes
-@abstractattrs
+# Abstract subclasses can add more required attributes.
 class B(A, abc.ABC):
     bar: Abstract[str]
 
 
 class C(B):
-    # C must define both of these attributes to not raise an error
+    # C must assign values to both of these attributes to not raise an error.
     foo = 1
+    bar = "str"
+
+
+# This raises an error.
+class MissingBar(B):
+    foo = 1
+
+
+# This raises an error.
+class MissingFoo(B):
     bar = "str"
 ```
 
