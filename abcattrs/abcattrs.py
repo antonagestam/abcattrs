@@ -1,15 +1,17 @@
 import abc
 import inspect
-from collections.abc import Callable
-from collections.abc import Iterable
 from functools import partial
 from functools import wraps
-from typing import Annotated
-from typing import Any
-from typing import Final
-from typing import TypeVar
-from typing import get_args
-
+from .typing_redirect import Annotated
+from .typing_redirect import Any
+from .typing_redirect import Callable
+from .typing_redirect import Iterable
+from .typing_redirect import Final
+from .typing_redirect import Tuple
+from .typing_redirect import Type
+from .typing_redirect import TypeVar
+from .typing_redirect import Union
+from .typing_redirect import get_args
 from .type_hints import extract_annotated
 from .type_hints import get_resolvable_type_hints
 
@@ -18,20 +20,20 @@ _O = TypeVar("_O")
 Abstract = Annotated[_O, _abstract_marker]
 
 
-def get_abstract_attributes(cls: type) -> Iterable[tuple[str, type]]:
+def get_abstract_attributes(cls: type) -> Iterable[Tuple[str, type]]:
     for var, hint in get_resolvable_type_hints(cls).items():
         annotated = extract_annotated(hint)
         if not annotated:
             continue
         # Checking for both the abstract marker and the type alias itself allows both
         # a concise way using e.g. `var: Abstract[int]` as well as a verbose way that
-        # allows combining the qualifier with other annotated types and qualifiers, e.g.
+        # allows combining thea qualifier with other annotated types and qualifiers, e.g.
         # `var: Annotated[int, Abstract, Other]`.
         if {_abstract_marker, Abstract} & set(get_args(annotated)):
             yield var, annotated
 
 
-C = TypeVar("C", bound=type[abc.ABC])
+C = TypeVar("C", bound=Type[abc.ABC])
 
 
 def abstractattrs(cls: C) -> C:
@@ -47,7 +49,7 @@ def abstractattrs(cls: C) -> C:
     # Add an __init_subclass__ method to the base class. If it already defines one, we
     # wrap it inside a function that will first check the subclasses' class attributes
     # and then call the already existing method.
-    cls.__init_subclass__ = (  # type: ignore[assignment]
+    cls.__init_subclass__ = (  # type: ignore[method-assign]
         classmethod(  # type: ignore[assignment]
             wraps(cls.__init_subclass__)(
                 partial(
@@ -84,7 +86,7 @@ def check_abstract_class_attributes(cls: type) -> None:
 
 def _init_subclass(
     cls: type,
-    existing_init_subclass: Callable[..., None] | None = None,
+    existing_init_subclass: Union[Callable[..., None], None] = None,
     *args: Any,
     **kwargs: Any,
 ) -> None:

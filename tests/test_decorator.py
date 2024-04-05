@@ -1,9 +1,10 @@
 import abc
-from typing import Annotated
-from typing import Any
-from typing import ClassVar
-from unittest import mock
+from abcattrs.typing_redirect import Any
+from abcattrs.typing_redirect import Annotated
+from abcattrs.typing_redirect import ClassVar
+from abcattrs.typing_redirect import Union
 
+from unittest import mock
 import pytest
 
 from abcattrs import Abstract
@@ -93,7 +94,7 @@ def test_concrete_multiple_subclass_raises_for_all_missing_attributes() -> None:
     ):
         type("D", (B,), valid_b)
 
-    type("E", (B,), valid_a | valid_b)
+    type("E", (B,), {**valid_a, **valid_b})
 
 
 def test_can_check_class_without_abstract_class_attributes() -> None:
