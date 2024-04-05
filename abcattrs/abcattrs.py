@@ -27,8 +27,8 @@ def get_abstract_attributes(cls: type) -> Iterable[Tuple[str, type]]:
             continue
         # Checking for both the abstract marker and the type alias itself allows both
         # a concise way using e.g. `var: Abstract[int]` as well as a verbose way that
-        # allows combining thea qualifier with other annotated types and qualifiers, e.g.
-        # `var: Annotated[int, Abstract, Other]`.
+        # allows combining thea qualifier with other annotated types and qualifiers,
+        # e.g. `var: Annotated[int, Abstract, Other]`.
         if {_abstract_marker, Abstract} & set(get_args(annotated)):
             yield var, annotated
 
