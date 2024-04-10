@@ -11,7 +11,7 @@ jobs:
     name: Static analysis
     uses: less-action/reusables/.github/workflows/pre-commit.yaml@v8
     with:
-      python-version: "3.11"
+      python-version: "3.8"
 
   check-build:
     name: Check packaging metadata
