@@ -31,7 +31,7 @@ else:
     from typing import Union
     from typing import get_args
     from typing import get_origin
-    from typing import get_type_hints  # type: ignore[call-arg]
+    from typing import get_type_hints
 
 __all__ = [
     "Annotated",
