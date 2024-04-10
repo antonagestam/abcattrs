@@ -2,18 +2,19 @@ import abc
 import inspect
 from functools import partial
 from functools import wraps
+
+from .type_hints import extract_annotated
+from .type_hints import get_resolvable_type_hints
 from .typing_redirect import Annotated
 from .typing_redirect import Any
 from .typing_redirect import Callable
-from .typing_redirect import Iterable
 from .typing_redirect import Final
+from .typing_redirect import Iterable
 from .typing_redirect import Tuple
 from .typing_redirect import Type
 from .typing_redirect import TypeVar
 from .typing_redirect import Union
 from .typing_redirect import get_args
-from .type_hints import extract_annotated
-from .type_hints import get_resolvable_type_hints
 
 _abstract_marker: Final = object()
 _O = TypeVar("_O")

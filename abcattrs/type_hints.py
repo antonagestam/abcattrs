@@ -4,9 +4,9 @@ from .typing_redirect import Dict
 from .typing_redirect import Final
 from .typing_redirect import ForwardRef
 from .typing_redirect import Union
-from .typing_redirect import get_type_hints
 from .typing_redirect import get_args
 from .typing_redirect import get_origin
+from .typing_redirect import get_type_hints
 
 max_iterations: Final = 10_000
 
