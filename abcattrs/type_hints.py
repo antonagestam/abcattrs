@@ -11,8 +11,7 @@ from .typing_redirect import get_origin
 max_iterations: Final = 10_000
 
 
-class MaxIterations(RuntimeError):
-    ...
+class MaxIterations(RuntimeError): ...
 
 
 def get_name_error_name(error: NameError) -> str:
@@ -30,9 +29,7 @@ def get_resolvable_type_hints(cls: type) -> Dict[str, type]:
     for _ in range(max_iterations):
         try:
             return get_type_hints(
-                cls,
-                include_extras=True,
-                localns=local_ns
+                cls, include_extras=True, localns=local_ns
             )  # type: ignore[call-arg]
         except NameError as exception:
             name = get_name_error_name(exception)
