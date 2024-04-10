@@ -94,7 +94,7 @@ def test_concrete_multiple_subclass_raises_for_all_missing_attributes() -> None:
     ):
         type("D", (B,), valid_b)
 
-    type("E", (B,), {**valid_a, **valid_b})
+    type("E", (B,), {**valid_a, **valid_b})  # type: ignore[arg-type]
 
 
 def test_can_check_class_without_abstract_class_attributes() -> None:
