@@ -18,20 +18,20 @@ if sys.version_info < (3, 9):
     from typing_extensions import get_type_hints
 else:
     from typing import Annotated  # type: ignore[attr-defined]
-    from typing import Any  # type: ignore[attr-defined]
-    from typing import Callable  # type: ignore[attr-defined]
-    from typing import ClassVar  # type: ignore[attr-defined]
-    from typing import Dict  # type: ignore[attr-defined]
-    from typing import Final  # type: ignore[attr-defined]
-    from typing import ForwardRef  # type: ignore[attr-defined]
-    from typing import Iterable  # type: ignore[attr-defined]
-    from typing import Tuple  # type: ignore[attr-defined]
-    from typing import Type  # type: ignore[attr-defined]
-    from typing import TypeVar  # type: ignore[attr-defined]
-    from typing import Union  # type: ignore[attr-defined]
-    from typing import get_args  # type: ignore[attr-defined]
-    from typing import get_origin  # type: ignore[attr-defined]
-    from typing import get_type_hints  # type: ignore[attr-defined]
+    from typing import Any
+    from typing import Callable
+    from typing import ClassVar
+    from typing import Dict
+    from typing import Final
+    from typing import ForwardRef
+    from typing import Iterable
+    from typing import Tuple
+    from typing import Type
+    from typing import TypeVar
+    from typing import Union
+    from typing import get_args
+    from typing import get_origin
+    from typing import get_type_hints  # type: ignore[call-arg]
 
 __all__ = [
     "Annotated",
