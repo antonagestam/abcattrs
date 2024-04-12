@@ -17,7 +17,7 @@ if sys.version_info < (3, 9):
     from typing_extensions import get_origin
     from typing_extensions import get_type_hints
 else:
-    from typing import Annotated  # type: ignore[attr-defined]
+    from typing import Annotated
     from typing import Any
     from typing import TypeVar
     from typing import get_args

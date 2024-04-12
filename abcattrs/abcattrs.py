@@ -68,7 +68,8 @@ def abstractattrs(cls: C) -> C:
     return cls
 
 
-class UndefinedAbstractAttribute(TypeError): ...
+class UndefinedAbstractAttribute(TypeError):
+    ...
 
 
 def check_abstract_class_attributes(cls: type) -> None:

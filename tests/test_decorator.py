@@ -10,7 +10,6 @@ from abcattrs import check_abstract_class_attributes
 from abcattrs.typing_redirect import Annotated
 from abcattrs.typing_redirect import Any
 from abcattrs.typing_redirect import ClassVar
-from abcattrs.typing_redirect import Union
 
 
 def test_base_class_saves_attributes() -> None:
@@ -19,7 +18,7 @@ def test_base_class_saves_attributes() -> None:
         bar: int
         foo: Abstract[int]
 
-    assert not {"foo"} ^ A.__abstract_attributes__  # type: ignore[attr-defined]
+    assert not ({"foo"} ^ A.__abstract_attributes__)  # type: ignore[attr-defined]
 
 
 def test_abstract_subclass_adds_to_attributes() -> None:
