@@ -1,7 +1,9 @@
 from .typing_redirect import Annotated
 from .typing_redirect import ClassVar
+from .typing_redirect import Dict
 from .typing_redirect import Final
 from .typing_redirect import ForwardRef
+from .typing_redirect import Union
 from .typing_redirect import get_args
 from .typing_redirect import get_origin
 from .typing_redirect import get_type_hints
@@ -17,7 +19,7 @@ def get_name_error_name(error: NameError) -> str:
     return str(error).split("'", 2)[1]
 
 
-def get_resolvable_type_hints(cls: type) -> dict[str, type]:
+def get_resolvable_type_hints(cls: type) -> Dict[str, type]:
     """
     Repeatedly attempt to resolve the type hints of the given class, handling the
     NameErrors produced by unresolvable names by inserting sentinel typing.ForwardRef
@@ -38,7 +40,7 @@ def get_resolvable_type_hints(cls: type) -> dict[str, type]:
         )
 
 
-def extract_annotated(hint: type) -> type | None:
+def extract_annotated(hint: type) -> Union[type, None]:
     # Unwrap ClassVar[T] -> T.
     if get_origin(hint) is ClassVar:
         try:

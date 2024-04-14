@@ -10,7 +10,10 @@ from .typing_redirect import Any
 from .typing_redirect import Callable
 from .typing_redirect import Final
 from .typing_redirect import Iterable
+from .typing_redirect import Tuple
+from .typing_redirect import Type
 from .typing_redirect import TypeVar
+from .typing_redirect import Union
 from .typing_redirect import get_args
 
 _abstract_marker: Final = object()
@@ -18,7 +21,7 @@ _O = TypeVar("_O")
 Abstract = Annotated[_O, _abstract_marker]
 
 
-def get_abstract_attributes(cls: type) -> Iterable[tuple[str, type]]:
+def get_abstract_attributes(cls: type) -> Iterable[Tuple[str, type]]:
     for var, hint in get_resolvable_type_hints(cls).items():
         annotated = extract_annotated(hint)
         if not annotated:
@@ -31,7 +34,7 @@ def get_abstract_attributes(cls: type) -> Iterable[tuple[str, type]]:
             yield var, annotated
 
 
-C = TypeVar("C", bound=type[abc.ABC])
+C = TypeVar("C", bound=Type[abc.ABC])
 
 
 def abstractattrs(cls: C) -> C:
@@ -84,7 +87,7 @@ def check_abstract_class_attributes(cls: type) -> None:
 
 def _init_subclass(
     cls: type,
-    existing_init_subclass: Callable[..., None] | None = None,
+    existing_init_subclass: Union[Callable[..., None], None] = None,
     *args: Any,
     **kwargs: Any,
 ) -> None:
