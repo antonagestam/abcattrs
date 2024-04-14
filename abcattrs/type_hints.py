@@ -1,10 +1,10 @@
-from typing import Annotated
-from typing import ClassVar
-from typing import Final
-from typing import ForwardRef
-from typing import get_args
-from typing import get_origin
-from typing import get_type_hints
+from .typing_redirect import Annotated
+from .typing_redirect import ClassVar
+from .typing_redirect import Final
+from .typing_redirect import ForwardRef
+from .typing_redirect import get_args
+from .typing_redirect import get_origin
+from .typing_redirect import get_type_hints
 
 max_iterations: Final = 10_000
 

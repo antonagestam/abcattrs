@@ -1,7 +1,4 @@
 import abc
-from typing import Annotated
-from typing import Any
-from typing import ClassVar
 from unittest import mock
 
 import pytest
@@ -10,6 +7,9 @@ from abcattrs import Abstract
 from abcattrs import UndefinedAbstractAttribute
 from abcattrs import abstractattrs
 from abcattrs import check_abstract_class_attributes
+from abcattrs.typing_redirect import Annotated
+from abcattrs.typing_redirect import Any
+from abcattrs.typing_redirect import ClassVar
 
 
 def test_base_class_saves_attributes() -> None:
