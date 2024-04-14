@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - abc_attrs_pullversion
   workflow_dispatch:
   pull_request:
 
@@ -41,3 +42,5 @@ jobs:
           file: coverage.xml
           fail_ci_if_error: true
           name: codecov-py${{ matrix.python-version }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
