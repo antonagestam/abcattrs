@@ -1,0 +1,1 @@
+{"source_ecosystem":{"language":"python","version":"3.13"},"source_dependencies":["mypy","pytest","types-setuptools"],"lock_files":[{"path":"requirements.txt","checksum":"sha256:02bebdb088c8a93d19b4a2361cb2f4e8bddff16cf8b7faa3c10a9e9183b84f74"}],"checksum":"sha256:3de28ba9f16484956f99db44578065ad4c6c3785c1fd3c8f7cdd52794a1b4165"}

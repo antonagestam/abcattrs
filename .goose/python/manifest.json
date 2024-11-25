@@ -1,0 +1,1 @@
+{"source_ecosystem":{"language":"python","version":"3.13"},"source_dependencies":["blacken-docs","check-jsonschema","pre-commit-hooks","ruff"],"lock_files":[{"path":"requirements.txt","checksum":"sha256:5a06a8583e93fe226f60b5f8a87748d22f2adecdcf38244caf33a1ab31b71f7c"}],"checksum":"sha256:76a16ac676d9eb82a4549ab59f4eaf1b43836ade8b2fa84ce9c030769d8a07ae"}

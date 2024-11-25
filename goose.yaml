@@ -1,0 +1,122 @@
+environments:
+  - id: python
+    ecosystem:
+      language: python
+      version: "3.13"
+    dependencies:
+      - ruff
+      - pre-commit-hooks
+      - check-jsonschema
+      - blacken-docs
+
+  - id: node
+    ecosystem:
+      language: node
+      version: "23.0.0"
+    dependencies:
+      - prettier
+
+  - id: mypy
+    ecosystem:
+      language: python
+      version: "3.13"
+    dependencies:
+      - mypy
+      - pytest
+      - types-setuptools
+
+  - id: check-manifest
+    ecosystem:
+      language: python
+      version: "3.13"
+    dependencies:
+      - check-manifest
+      - setuptools==75.6.0
+      - wheel==0.45.1
+
+hooks:
+  - id: mypy
+    environment: mypy
+    command: mypy
+    env_vars:
+      FORCE_COLOR: "1"
+      COLUMNS: "150"
+    read_only: true
+    parameterize: false
+
+  - id: check-manifest
+    environment: check-manifest
+    command: check-manifest
+    parameterize: false
+    read_only: true
+    args: [--no-build-isolation]
+
+  - id: prettier
+    environment: node
+    command: prettier
+    types: [markdown]
+    args:
+      - --write
+      - --ignore-unknown
+      - --parser=markdown
+      - --print-width=88
+      - --prose-wrap=always
+
+  - id: check-case-conflict
+    environment: python
+    command: check-case-conflict
+    read_only: true
+
+  - id: check-merge-conflict
+    environment: python
+    command: check-merge-conflict
+    read_only: true
+    types: [text]
+
+  - id: python-debug-statements
+    environment: python
+    command: debug-statement-hook
+    read_only: true
+    types: [python]
+
+  - id: detect-private-key
+    environment: python
+    command: detect-private-key
+    read_only: true
+    types: [text]
+
+  - id: end-of-file-fixer
+    environment: python
+    command: end-of-file-fixer
+    types: [text]
+
+  - id: trailing-whitespace-fixer
+    environment: python
+    command: trailing-whitespace-fixer
+    types: [text]
+
+  - id: ruff-check
+    environment: python
+    command: ruff
+    args: [check, --force-exclude, --fix]
+    types: [python]
+
+  - id: ruff-format
+    environment: python
+    command: ruff
+    args: [format, --force-exclude]
+    types: [python]
+
+  - id: blacken-docs
+    environment: python
+    command: blacken-docs
+    types: [markdown, python]
+
+  - id: check-github-workflows
+    environment: python
+    command: check-jsonschema
+    read_only: true
+    args: ["--builtin-schema", "vendor.github-workflows"]
+    types: [yaml]
+    limit:
+      - "^.github/workflows/"

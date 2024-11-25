@@ -47,7 +47,7 @@ def abstractattrs(cls: C) -> C:
     # Add an __init_subclass__ method to the base class. If it already defines one, we
     # wrap it inside a function that will first check the subclasses' class attributes
     # and then call the already existing method.
-    cls.__init_subclass__ = (  # type: ignore[assignment]
+    cls.__init_subclass__ = (  # type: ignore[method-assign]
         classmethod(  # type: ignore[assignment]
             wraps(cls.__init_subclass__)(
                 partial(
@@ -65,8 +65,7 @@ def abstractattrs(cls: C) -> C:
     return cls
 
 
-class UndefinedAbstractAttribute(TypeError):
-    ...
+class UndefinedAbstractAttribute(TypeError): ...
 
 
 def check_abstract_class_attributes(cls: type) -> None:

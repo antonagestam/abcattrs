@@ -1,9 +1,12 @@
 exclude Makefile
 recursive-exclude docs *
 recursive-exclude .github *
+recursive-exclude .goose *
 recursive-exclude tests *
 recursive-include abcattrs py.typed
 exclude *.yaml
 exclude *.yml
+exclude *.toml
 include README.md
 include LICENSE
+include pyproject.toml
