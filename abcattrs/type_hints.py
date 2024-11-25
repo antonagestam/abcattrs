@@ -9,8 +9,7 @@ from typing import get_type_hints
 max_iterations: Final = 10_000
 
 
-class MaxIterations(RuntimeError):
-    ...
+class MaxIterations(RuntimeError): ...
 
 
 def get_name_error_name(error: NameError) -> str:
@@ -31,11 +30,10 @@ def get_resolvable_type_hints(cls: type) -> dict[str, type]:
         except NameError as exception:
             name = get_name_error_name(exception)
             local_ns[name] = ForwardRef(name)  # type: ignore[assignment]
-    else:  # pragma: no cover
-        raise MaxIterations(
-            f"Exceeded {max_iterations} iterations trying to resolve type hints of "
-            f"{cls.__module__}.{cls.__qualname__}."
-        )
+    raise MaxIterations(  # pragma: no cover
+        f"Exceeded {max_iterations} iterations trying to resolve type hints of "
+        f"{cls.__module__}.{cls.__qualname__}."
+    )
 
 
 def extract_annotated(hint: type) -> type | None:
@@ -48,7 +46,7 @@ def extract_annotated(hint: type) -> type | None:
         except ValueError:  # pragma: no cover
             return None
 
-    if not get_origin(hint) is Annotated:
+    if get_origin(hint) is not Annotated:
         return None
 
     return hint

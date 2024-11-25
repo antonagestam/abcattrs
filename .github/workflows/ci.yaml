@@ -9,9 +9,7 @@ on:
 jobs:
   lint:
     name: Static analysis
-    uses: less-action/reusables/.github/workflows/pre-commit.yaml@v8
-    with:
-      python-version: "3.11"
+    uses: antonagestam/goose/.github/workflows/run.yaml@0.9.0
 
   check-build:
     name: Check packaging metadata

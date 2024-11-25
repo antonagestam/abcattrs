@@ -125,16 +125,15 @@ def test_existing_init_subclass_method_is_wrapped() -> None:
 def test_can_decorate_class_with_self_reference() -> None:
     @abstractattrs
     class A(abc.ABC):
-        recursive: Abstract["A"]  # noqa: F821
+        recursive: Abstract["A"]
 
 
 def test_can_decorate_class_with_forward_reference() -> None:
     @abstractattrs
     class A(abc.ABC):
-        forward: Abstract["B"]  # noqa: F821
+        forward: Abstract["B"]
 
-    class B:
-        ...
+    class B: ...
 
     class C(A):
         forward = B()
@@ -146,8 +145,6 @@ def test_does_not_interpret_abstract_subclass_as_concrete() -> None:
         attr: Abstract[int]
 
         @abc.abstractmethod
-        def foo(self) -> None:
-            ...
+        def foo(self) -> None: ...
 
-    class B(A):
-        ...
+    class B(A): ...

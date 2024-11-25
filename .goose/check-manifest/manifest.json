@@ -1,0 +1,1 @@
+{"source_ecosystem":{"language":"python","version":"3.13"},"source_dependencies":["check-manifest","setuptools==75.6.0","wheel==0.45.1"],"lock_files":[{"path":"requirements.txt","checksum":"sha256:e1d33bb3b4287b3ee29d6347bbafb6ce3c3800836559faddfcb84bfc233b33a9"}],"checksum":"sha256:03fcf52f00db4b05d7cc74bc4affa688db258b6bd7c53620903dade10ec4b397"}

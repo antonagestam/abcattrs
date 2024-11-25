@@ -1,0 +1,57 @@
+target-version = "py310"
+
+[lint]
+extend-select = [
+  "B",  # bugbear
+  "C4",  # comprehensions
+  "C90",  # mccabe
+  "S",  # bandit
+  # Bare excepts are caught without this, but this also catches `except Exception: ...`.
+  "BLE",  # blind exception
+  "A",  # builtins
+  "RUF100",  # Enforce valid noqa comments.
+  "I",  # isort
+  "W",  # pycodestyle
+  "UP",  # pyupgrade
+  "T10",  # debugger
+  "Q",  # quotes
+  "SIM",  # simplify
+  # We use this to only outlaw relative _parent_ imports, other relative imports are OK.
+  "TID",  # tidy imports
+  "PL",  # Pylint
+]
+extend-ignore = [
+  # There's no reason to outlaw asserts.
+  # https://stackoverflow.com/a/68429294/1220706
+  "S101",
+  # Ignore line-length. This is enforced by black, but all cases cannot be handled.
+  # Ideally we'd only suppress this in generated files.
+  "E501",
+  # Allow function calls in argument defaults.
+  "B008",
+  # Bad advise.
+  "SIM105",
+  # "Yoda conditions are discouraged", this is dangerous to apply, as it
+  # destroys some cases that are designed to test bi-directional equality.
+  "SIM300",
+  # Not yet supported in mypy.
+  "UP040",
+  # Bad advise.
+  "PLR0911",
+]
+
+[lint.isort]
+force-single-line = true
+known-first-party = ["goose", "tests"]
+
+[lint.mccabe]
+max-complexity = 10
+
+[lint.flake8-tidy-imports]
+ban-relative-imports = "parents"
+
+[lint.extend-per-file-ignores]
+"tests/*" = [
+  # Cryptographically safe usage of PRNGs is not relevant in tests.
+  "S311",
+]
