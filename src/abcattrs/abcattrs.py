@@ -83,6 +83,7 @@ def check_abstract_class_attributes(cls: type) -> None:
 
 def _init_subclass(
     cls: type,
+    /,
     existing_init_subclass: Callable[..., None] | None = None,
     *args: Any,
     **kwargs: Any,
