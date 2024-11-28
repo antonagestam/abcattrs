@@ -16,15 +16,6 @@ environments:
     dependencies:
       - prettier
 
-  - id: mypy
-    ecosystem:
-      language: python
-      version: "3.13"
-    dependencies:
-      - mypy
-      - pytest
-      - types-setuptools
-
   - id: check-manifest
     ecosystem:
       language: python
@@ -32,18 +23,10 @@ environments:
     dependencies:
       - check-manifest
       - setuptools==75.6.0
+      - setuptools-scm==8.1.0
       - wheel==0.45.1
 
 hooks:
-  - id: mypy
-    environment: mypy
-    command: mypy
-    env_vars:
-      FORCE_COLOR: "1"
-      COLUMNS: "150"
-    read_only: true
-    parameterize: false
-
   - id: check-manifest
     environment: check-manifest
     command: check-manifest
