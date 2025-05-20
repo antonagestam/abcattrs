@@ -60,9 +60,3 @@ type-check = [
 
 [tool.check-manifest]
 ignore = ["src/abcattrs/_version.py"]
-
-
-[tool.pip-tools]
-generate-hashes = true
-strip-extras = true
-upgrade = true

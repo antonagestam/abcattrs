@@ -7,4 +7,10 @@ clean:
 .PHONY: requirements
 requirements: export UV_CUSTOM_COMPILE_COMMAND='make requirements'
 requirements:
-	uv pip compile --extra=type-check --output-file=requirements-typing.txt pyproject.toml
+	@uv pip compile \
+		--extra=type-check \
+		--generate-hashes \
+		--strip-extras \
+		--upgrade \
+		--output-file=requirements-typing.txt \
+		pyproject.toml
