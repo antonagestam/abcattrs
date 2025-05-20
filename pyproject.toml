@@ -60,3 +60,7 @@ type-check = [
 
 [tool.check-manifest]
 ignore = ["src/abcattrs/_version.py"]
+
+
+[tool.coverage.report]
+exclude_also = ['^\s*\.\.\.']
