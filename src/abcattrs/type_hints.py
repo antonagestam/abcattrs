@@ -1,3 +1,4 @@
+import sys
 from typing import Annotated
 from typing import ClassVar
 from typing import Final
@@ -12,8 +13,14 @@ max_iterations: Final = 10_000
 class MaxIterations(RuntimeError): ...
 
 
-def get_name_error_name(error: NameError) -> str:
-    return str(error).split("'", 2)[1]
+if sys.version_info < (3, 14):
+
+    def get_name_error_name(error: NameError) -> str:
+        return str(error).split("'", 2)[1]
+else:
+
+    def get_name_error_name(error: NameError) -> str:
+        return str(error)
 
 
 def get_resolvable_type_hints(cls: type) -> dict[str, type]:
