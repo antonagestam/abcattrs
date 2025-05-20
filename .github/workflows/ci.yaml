@@ -13,7 +13,7 @@ jobs:
 
   check-build:
     name: Check packaging metadata
-    uses: less-action/reusables/.github/workflows/python-test-build.yaml@v8
+    uses: less-action/reusables/.github/workflows/python-test-build.yaml@v10
 
   test:
     name: Test
