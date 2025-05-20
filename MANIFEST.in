@@ -14,3 +14,4 @@ include pyproject.toml
 exclude setup.cfg
 exclude .gitignore
 exclude .editorconfig
+exclude mypy.ini
