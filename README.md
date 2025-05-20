@@ -1,7 +1,7 @@
 <h1 align=center>abcattrs</h1>
 
 <p align=center>
-    <a href=https://github.com/antonagestam/abcattrs/actions?query=workflow%3ACI+branch%3Amain><img src=https://github.com/antonagestam/abcattrs/workflows/CI/badge.svg alt="CI Build Status"></a>
+    <a href=https://github.com/antonagestam/abcattrs/actions?query=workflow%3ACI+branch%3Amain><img src=https://github.com/antonagestam/abcattrs/actions/workflows/ci.yaml/badge.svg?branch=main alt="CI Build Status"></a>
     <a href="https://codecov.io/gh/antonagestam/abcattrs"><img src="https://codecov.io/gh/antonagestam/abcattrs/branch/main/graph/badge.svg?token=QY7CX7C73R"/></a>
     <br>
     <a href=https://pypi.org/project/abcattrs/><img src=https://img.shields.io/pypi/v/abcattrs.svg?color=informational&label=PyPI alt="PyPI Package"></a>
