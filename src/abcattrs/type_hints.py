@@ -1,4 +1,3 @@
-import sys
 from typing import Annotated
 from typing import ClassVar
 from typing import Final
@@ -13,16 +12,6 @@ max_iterations: Final = 10_000
 class MaxIterations(RuntimeError): ...
 
 
-if sys.version_info < (3, 14):
-
-    def get_name_error_name(error: NameError) -> str:
-        return str(error).split("'", 2)[1]
-else:
-
-    def get_name_error_name(error: NameError) -> str:
-        return str(error)
-
-
 def get_resolvable_type_hints(cls: type) -> dict[str, type]:
     """
     Repeatedly attempt to resolve the type hints of the given class, handling the
@@ -35,7 +24,7 @@ def get_resolvable_type_hints(cls: type) -> dict[str, type]:
         try:
             return get_type_hints(cls, include_extras=True, localns=local_ns)
         except NameError as exception:
-            name = get_name_error_name(exception)
+            name = exception.name
             local_ns[name] = ForwardRef(name)  # type: ignore[assignment]
     raise MaxIterations(  # pragma: no cover
         f"Exceeded {max_iterations} iterations trying to resolve type hints of "
