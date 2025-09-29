@@ -1,22 +1,17 @@
 environments:
-  - id: python
-    ecosystem:
-      language: python
+  - ecosystem: python
     dependencies:
       - ruff
       - pre-commit-hooks
       - check-jsonschema
       - blacken-docs
 
-  - id: node
-    ecosystem:
-      language: node
+  - ecosystem: node
     dependencies:
       - prettier
 
   - id: check-manifest
-    ecosystem:
-      language: python
+    ecosystem: python
     dependencies:
       - check-manifest
       - setuptools==80.8.0
