@@ -9,7 +9,7 @@ on:
 jobs:
   lint:
     name: Static analysis
-    uses: antonagestam/goose/.github/workflows/run.yaml@0.14.1
+    uses: antonagestam/goose/.github/workflows/run.yaml@0.14.2
 
   check-build:
     name: Check packaging metadata
