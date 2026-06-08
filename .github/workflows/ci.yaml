@@ -34,7 +34,7 @@ jobs:
       - run: pip install -e '.[test]'
       - run: coverage run -m pytest
       - run: coverage report -m && coverage xml
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v7
         if: '!github.event.schedule'
         with:
           files: coverage.xml
